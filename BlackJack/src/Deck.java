@@ -63,6 +63,10 @@ public class Deck {
 		return deck.pop();
 	}
 	
+	public Card peek() {
+		return deck.peek();
+	}
+	
 	public String toString() {
 		return deck.toString();
 	}

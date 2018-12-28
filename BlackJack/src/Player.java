@@ -4,14 +4,17 @@ public class Player {
 	private ArrayList<Card> cards;
 	private boolean busted;
 	private boolean blackjack;
+	private boolean playing;
 	
 	Player() {
 		cards = new ArrayList<Card>();
 		busted = false;
+		playing = true;
 	}
 	
+	
 	//Helpers
-	private int sum() {
+	public int sum() {
 		int result = 0;
 		for(int i = 0; i < cards.size(); i ++) {
 			result += cards.get(i).getValue();
@@ -20,24 +23,11 @@ public class Player {
 		
 	}
 	
-	/*
-	 * 0 = not busted
-	 * 1 = busted
-	 * 2 = 21;
-	 */
-	private int check() {
-		int sum = sum();
-		if(sum < 21) {
-			busted = false;
-			return 0;
-		} else if (sum == 21) {
-			busted = false;
-			blackjack = true;
-			return 2;
-		} else {
-			busted = true;
-			return 1;
-		}
+	public boolean check() {
+		if (sum() > 21 && hasAce() ) {
+			return (sum() - 10) <= 21;
+		} else 
+			return sum() <= 21;
 	}
 	
 	//Returns the sum of the hand after adding the top card from the deck
@@ -52,5 +42,25 @@ public class Player {
 			result += c + "\n";
 		}
 		return result + sum();
+	}
+	
+	public boolean getPlaying() {
+		return this.playing;
+	}
+	
+	public void setPlaying(boolean x) {
+		this.playing = x;
+	}
+	
+	public ArrayList<Card> getCards() {
+		return cards;
+	}
+	
+	boolean hasAce() {
+		for(Card c : cards) {
+			if(c.getValue() == 11)
+				return true;
+		}
+		return false;
 	}
 }
